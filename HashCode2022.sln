@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32210.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashCode2022", "HashCode2022.csproj", "{DEC48A88-4F96-4385-84D3-9F94E6690236}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashCode2022.Tests", "..\HashCode2022.Tests\HashCode2022.Tests.csproj", "{E5CDE1B7-2DEF-4F43-9FA0-02588037C80F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DEC48A88-4F96-4385-84D3-9F94E6690236}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEC48A88-4F96-4385-84D3-9F94E6690236}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEC48A88-4F96-4385-84D3-9F94E6690236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5CDE1B7-2DEF-4F43-9FA0-02588037C80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5CDE1B7-2DEF-4F43-9FA0-02588037C80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5CDE1B7-2DEF-4F43-9FA0-02588037C80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5CDE1B7-2DEF-4F43-9FA0-02588037C80F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
