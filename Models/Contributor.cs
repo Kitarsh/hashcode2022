@@ -7,10 +7,24 @@ public class Contributor
 
     public List<Skill> Skills { get; } = new List<Skill>();
 
+    public bool CanBeMentored(Skill skill, List<Contributor> contributors)
+    {
+        if (contributors.Any(c => c.HasRequiredSkill(skill)))
+        {
+            return skill.Level == 1 || Skills.Any(s => s.Name == skill.Name && skill.Level == s.Level + 1);
+        }
+        return false;
+    }
+
     public void EndProject(Skill skill)
     {
         IsAssignToProject = false;
         LearnSkill(skill);
+    }
+
+    public bool HasRequiredSkill(Skill skill)
+    {
+        return Skills.Any(s => s.Name == skill.Name && skill.Level <= s.Level);
     }
 
     private void LearnSkill(Skill skill)

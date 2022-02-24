@@ -10,17 +10,18 @@ InputService.SetInputFileName(fileName);
 var projects = InputService.GetProjects();
 Dictionary<int, Project> orderedProjects = new Dictionary<int, Project>();
 
-//var temps = 0;
-
-//for (var i = 0; i < 1000; i++)
-//{
-//    // si un des projet est
-//    pr
-//    temps++
-//}
-for (int i = 0; i < projects.Count; i++)
+for (int j = 0; j < 30; j++)
 {
-    AssignementService.PopulateContributorsForProject(projects[i]);
+    var projectsToDo = projects.Where(p => !p.IsDone)
+                               .OrderBy(p => p.RequiredSkills.Max(rs => rs.Value.Level))
+                               .ThenBy(p => p.RequiredSkills.Count())
+                               .Take(5)
+                               .ToList();
+
+    for (int i = 0; i < projectsToDo.Count; i++)
+    {
+        AssignementService.PopulateContributorsForProject(projectsToDo[i]);
+    }
     AssignementService.CompleteAllProjects(orderedProjects);
 }
 

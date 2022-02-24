@@ -22,13 +22,37 @@ public static class AssignementService
         var avCo = InputService.GetContributors()
                                .Where(c => !c.IsAssignToProject)
                                .ToList();
+        var requiredSkills = project.RequiredSkills.OrderByDescending(rs => rs.Value.Level)
+                                                   .ToDictionary(rs => rs.Key, rs => rs.Value);
 
-        foreach (KeyValuePair<int, Skill> skill in project.RequiredSkills)
+        foreach (KeyValuePair<int, Skill> skill in requiredSkills)
         {
-            var contribMatch = avCo.FirstOrDefault(c => c.Skills.Any(s => s.Name == skill.Value.Name && s.Level >= skill.Value.Level));
+            if (project.Contributors.ContainsKey(skill.Key))// il faut aussi préciser que le slot pour ce skill du projet est désormais pris
+            {
+                continue;
+            }
+            // A-t-on un contrib avec un niveau suffisant ?
+            var contribMatch = avCo.FirstOrDefault(c => c.HasRequiredSkill(skill.Value));
             if (contribMatch != null && !contribMatch.IsAssignToProject)
             {
-                project.Contributors.Add(skill.Key, contribMatch);// il faut aussi préciser que le slot pour ce skill du projet est désormais pris
+                project.Contributors.Add(skill.Key, contribMatch);
+                contribMatch.IsAssignToProject = true;
+            }
+        }
+
+        foreach (KeyValuePair<int, Skill> skill in requiredSkills)
+        {
+            if (project.Contributors.ContainsKey(skill.Key))// il faut aussi préciser que le slot pour ce skill du projet est désormais pris
+            {
+                continue;
+            }
+            // A-t-on un contrib qui peut être mentoré ?
+            var contribInProject = project.Contributors.Select(c => c.Value).ToList();
+
+            var contribMatch = avCo.FirstOrDefault(c => c.CanBeMentored(skill.Value, contribInProject));
+            if (contribMatch != null && !contribMatch.IsAssignToProject)
+            {
+                project.Contributors.Add(skill.Key, contribMatch);
                 contribMatch.IsAssignToProject = true;
             }
         }
